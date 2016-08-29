@@ -1,0 +1,68 @@
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.jacko1972.popularmovies.DetailActivityFragment"
+    tools:showIn="@layout/activity_detail">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/movie_detail_image_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:contentDescription="@string/movie_image"/>
+
+        <TextView
+            android:id="@+id/lbl_synopsis"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/synopsis"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_marginTop="@dimen/detail_text_view_spacing"
+            android:layout_marginBottom="@dimen/detail_text_view_spacing"/>
+
+        <TextView
+            android:id="@+id/synopsis"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"/>
+
+        <TextView
+            android:id="@+id/lbl_release_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/release_date"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_marginTop="@dimen/detail_text_view_spacing"
+            android:layout_marginBottom="@dimen/detail_text_view_spacing"/>
+
+        <TextView
+            android:id="@+id/release_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/lbl_user_rating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/user_rating"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_marginTop="@dimen/detail_text_view_spacing"
+            android:layout_marginBottom="@dimen/detail_text_view_spacing"/>
+
+        <TextView
+            android:id="@+id/user_rating"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+</ScrollView>
