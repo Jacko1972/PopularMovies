@@ -1,7 +1,10 @@
 package com.jacko1972.popularmovies;
 
 
-class MovieInfo {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+class MovieInfo implements Parcelable {
     //String adult;
     private String backdrop_path;
     //Array genre_ids;
@@ -18,8 +21,8 @@ class MovieInfo {
     //String vote_count;
 
 
-    public MovieInfo() {
-    }
+//    public MovieInfo() {
+//    }
 
     public MovieInfo(String id, String backdrop_path, String original_title, String overview, String poster_path, String release_date, String vote_average) {
         this.id = id;
@@ -30,6 +33,28 @@ class MovieInfo {
         this.release_date = release_date;
         this.vote_average = vote_average;
     }
+
+    protected MovieInfo(Parcel in) {
+        backdrop_path = in.readString();
+        id = in.readString();
+        original_title = in.readString();
+        overview = in.readString();
+        release_date = in.readString();
+        poster_path = in.readString();
+        vote_average = in.readString();
+    }
+
+    public static final Creator<MovieInfo> CREATOR = new Creator<MovieInfo>() {
+        @Override
+        public MovieInfo createFromParcel(Parcel in) {
+            return new MovieInfo(in);
+        }
+
+        @Override
+        public MovieInfo[] newArray(int size) {
+            return new MovieInfo[size];
+        }
+    };
 
     public String getId() {
         return id;
@@ -81,6 +106,22 @@ class MovieInfo {
 
     public String getVote_average() {
         return vote_average;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(backdrop_path);
+        parcel.writeString(id);
+        parcel.writeString(original_title);
+        parcel.writeString(overview);
+        parcel.writeString(release_date);
+        parcel.writeString(poster_path);
+        parcel.writeString(vote_average);
     }
 
     //public void setVote_average(String vote_average) {

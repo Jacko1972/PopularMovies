@@ -27,10 +27,10 @@ public class DetailActivityFragment extends Fragment {
 
         Intent intent = getActivity().getIntent();
 
-        int position = intent.getIntExtra("movieInfoPosition", -1);
-        MovieInfo movieInfo = MainActivity.movieInfo.get(position);
+        //int position = intent.getIntExtra("movieInfoPosition", -1);
+        MovieInfo movieInfo = intent.getParcelableExtra("parcelMovie");
 
-        if (position != -1) {
+        if (movieInfo != null) {
             // Set title
             getActivity().setTitle(movieInfo.getOriginal_title());
 

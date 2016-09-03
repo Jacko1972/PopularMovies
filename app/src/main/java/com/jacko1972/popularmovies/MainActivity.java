@@ -11,8 +11,6 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-
-    public static ArrayList<MovieInfo> movieInfo = new ArrayList<>();
     //private static final String TAG = "MainActivity";
 
     @Override

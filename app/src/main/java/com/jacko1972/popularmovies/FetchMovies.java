@@ -20,6 +20,11 @@ class FetchMovies extends AsyncTask<String, Void, ArrayList<MovieInfo>> {
 
     private static final String TAG = "FetchMovies";
     private boolean failedToConnect = false;
+    private final UpdateMovieList updateMovieList;
+
+    public FetchMovies(UpdateMovieList movieList) {
+        updateMovieList = movieList;
+    }
 
     private ArrayList<MovieInfo> getMovieDataFromJson(String returnJson) throws JSONException {
         JSONObject data = new JSONObject(returnJson);
@@ -56,11 +61,12 @@ class FetchMovies extends AsyncTask<String, Void, ArrayList<MovieInfo>> {
         String moviesJsonResponse = null;
 
         try {
-            final String FORECAST_BASE_URL = "https://api.themoviedb.org/3/movie/" + strings[0];
-            final String APPID_PARAM = "api_key";
+            final String FORECAST_BASE_URL = "https://api.themoviedb.org/3/movie/";
+            final String APP_ID_PARAM = "api_key";
 
             Uri builtUri = Uri.parse(FORECAST_BASE_URL).buildUpon()
-                    .appendQueryParameter(APPID_PARAM, BuildConfig.MOVIES_API_KEY)
+                    .appendPath(strings[0])
+                    .appendQueryParameter(APP_ID_PARAM, BuildConfig.MOVIES_API_KEY)
                     .build();
 
             URL url = new URL(builtUri.toString());
@@ -119,8 +125,9 @@ class FetchMovies extends AsyncTask<String, Void, ArrayList<MovieInfo>> {
         if (failedToConnect) {
             Log.e(TAG, "Failed");
         } else {
-            MainActivity.movieInfo = movies;
-            MainActivityFragment.movieAdapter.notifyDataSetChanged();
+            if (updateMovieList != null) {
+                updateMovieList.updateMovieList(movies);
+            }
         }
     }
 }

@@ -14,13 +14,16 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 /**
  * A placeholder fragment containing a simple view.
  */
-public class MainActivityFragment extends Fragment {
+public class MainActivityFragment extends Fragment implements UpdateMovieList {
 
     private GridView gridView;
     public static MovieAdapter movieAdapter;
+    public ArrayList<MovieInfo> movieInfo = new ArrayList<>();
 
     public MainActivityFragment() {
     }
@@ -49,15 +52,17 @@ public class MainActivityFragment extends Fragment {
             } else {
                 getActivity().setTitle("Popular Movies");
             }
-            FetchMovies fetchMovies = new FetchMovies();
+            FetchMovies fetchMovies = new FetchMovies(this);
             fetchMovies.execute(movie_list);
-            movieAdapter = new MovieAdapter(getActivity());
+            movieAdapter = new MovieAdapter(getActivity(), movieInfo);
             gridView.setAdapter(movieAdapter);
             gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                     Intent intent = new Intent(getActivity(), DetailActivity.class);
-                    intent.putExtra("movieInfoPosition", i);
+                    MovieInfo selectedMovie = movieAdapter.getItem(i);
+                    intent.putExtra("parcelMovie", selectedMovie);
+                    //intent.putExtra("movieInfoPosition", i);
                     startActivity(intent);
                 }
             });
@@ -69,5 +74,11 @@ public class MainActivityFragment extends Fragment {
     private boolean internetAvailable() {
         ConnectivityManager connectivityManager = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
         return connectivityManager.getActiveNetworkInfo() != null && connectivityManager.getActiveNetworkInfo().isConnected();
+    }
+
+    @Override
+    public void updateMovieList(ArrayList<MovieInfo> movies) {
+        movieInfo = movies;
+        movieAdapter.notifyDataSetChanged();
     }
 }

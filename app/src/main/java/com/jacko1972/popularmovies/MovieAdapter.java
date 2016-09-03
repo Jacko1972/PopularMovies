@@ -5,32 +5,18 @@ import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
 
-public class MovieAdapter extends BaseAdapter {
+import java.util.List;
 
-    private final Context context;
+public class MovieAdapter extends ArrayAdapter<MovieInfo> {
 
-    public MovieAdapter(Context context) {
-        this.context = context;
-    }
-
-    @Override
-    public int getCount() {
-        return MainActivity.movieInfo.size();
-    }
-
-    @Override
-    public Object getItem(int i) {
-        return MainActivity.movieInfo.get(i);
-    }
-
-    @Override
-    public long getItemId(int i) {
-        return 0;
+    public MovieAdapter(Context context, List<MovieInfo> movies) {
+        super(context, 0, movies);
     }
 
     @Override
@@ -42,10 +28,10 @@ public class MovieAdapter extends BaseAdapter {
         } else {
             poster = (ImageView) view;
         }
-        MovieInfo movieInfo = MainActivity.movieInfo.get(i);
+        MovieInfo movieInfo = getItem(i);
         if (!movieInfo.getBackdrop_path().equals("No Path")) {
             Uri uri = Uri.parse("http://image.tmdb.org/t/p/w185/" + movieInfo.getPoster_path());
-            Picasso.with(context).load(uri).into(poster);
+            Picasso.with(getContext()).load(uri).into(poster);
         }
 
         return poster;
