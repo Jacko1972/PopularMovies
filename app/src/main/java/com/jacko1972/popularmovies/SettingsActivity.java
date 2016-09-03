@@ -40,7 +40,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-            setPreferencesFromResource(R.xml.prefs_general, rootKey);
+            //setPreferencesFromResource(R.xml.prefs_general, rootKey);
         }
 
         private void bindPreferenceSummaryToValue(Preference preference) {

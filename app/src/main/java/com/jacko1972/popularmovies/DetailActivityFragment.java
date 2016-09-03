@@ -27,7 +27,6 @@ public class DetailActivityFragment extends Fragment {
 
         Intent intent = getActivity().getIntent();
 
-        //int position = intent.getIntExtra("movieInfoPosition", -1);
         MovieInfo movieInfo = intent.getParcelableExtra("parcelMovie");
 
         if (movieInfo != null) {
