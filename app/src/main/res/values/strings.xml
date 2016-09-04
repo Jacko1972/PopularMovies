@@ -21,4 +21,5 @@
     <string name="synopsis">Synopsis:</string>
     <string name="release_date">Release Date:</string>
     <string name="user_rating">User Rating:</string>
+    <string name="out_of_10">/10</string>
 </resources>

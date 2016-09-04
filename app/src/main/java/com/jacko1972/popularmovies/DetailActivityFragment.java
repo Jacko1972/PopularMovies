@@ -2,8 +2,8 @@ package com.jacko1972.popularmovies;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,7 +50,8 @@ public class DetailActivityFragment extends Fragment {
 
             //Set User Rating
             TextView userRating = (TextView) rootView.findViewById(R.id.user_rating);
-            userRating.setText(movieInfo.getVote_average());
+            String userRatingText = movieInfo.getVote_average() + getString(R.string.out_of_10);
+            userRating.setText(userRatingText);
         }
         return rootView;
     }

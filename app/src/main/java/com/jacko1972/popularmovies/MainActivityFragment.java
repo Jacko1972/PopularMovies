@@ -4,9 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
+import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,9 +21,8 @@ import java.util.ArrayList;
  */
 public class MainActivityFragment extends Fragment implements UpdateMovieList {
 
-    private GridView gridView;
-    public static MovieAdapter movieAdapter;
-    public ArrayList<MovieInfo> movieInfo = new ArrayList<>();
+    private MovieAdapter movieAdapter;
+    private final ArrayList<MovieInfo> movieInfo = new ArrayList<>();
 
     public MainActivityFragment() {
     }
@@ -31,7 +30,19 @@ public class MainActivityFragment extends Fragment implements UpdateMovieList {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-        gridView = (GridView) rootView.findViewById(R.id.movie_grid_view);
+        GridView gridView = (GridView) rootView.findViewById(R.id.movie_grid_view);
+        movieAdapter = new MovieAdapter(getActivity(), movieInfo);
+        gridView.setAdapter(movieAdapter);
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(getActivity(), DetailActivity.class);
+                MovieInfo selectedMovie = movieAdapter.getItem(i);
+                intent.putExtra("parcelMovie", selectedMovie);
+                //intent.putExtra("movieInfoPosition", i);
+                startActivity(intent);
+            }
+        });
         return rootView;
     }
 
@@ -54,18 +65,6 @@ public class MainActivityFragment extends Fragment implements UpdateMovieList {
             }
             FetchMovies fetchMovies = new FetchMovies(this);
             fetchMovies.execute(movie_list);
-            movieAdapter = new MovieAdapter(getActivity(), movieInfo);
-            gridView.setAdapter(movieAdapter);
-            gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                    Intent intent = new Intent(getActivity(), DetailActivity.class);
-                    MovieInfo selectedMovie = movieAdapter.getItem(i);
-                    intent.putExtra("parcelMovie", selectedMovie);
-                    //intent.putExtra("movieInfoPosition", i);
-                    startActivity(intent);
-                }
-            });
         } else {
             Toast.makeText(getActivity(), "No Internet Connection!! Please connect to load the Movie Information.", Toast.LENGTH_LONG).show();
         }
@@ -78,7 +77,10 @@ public class MainActivityFragment extends Fragment implements UpdateMovieList {
 
     @Override
     public void updateMovieList(ArrayList<MovieInfo> movies) {
-        movieInfo = movies;
+        movieAdapter.clear();
+        movieInfo.clear();
+        movieInfo.addAll(movies);
+        movieAdapter.addAll(movieInfo);
         movieAdapter.notifyDataSetChanged();
     }
 }

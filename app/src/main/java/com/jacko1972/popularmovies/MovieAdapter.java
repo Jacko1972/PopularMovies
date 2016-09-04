@@ -6,16 +6,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class MovieAdapter extends ArrayAdapter<MovieInfo> {
 
-    public MovieAdapter(Context context, List<MovieInfo> movies) {
+    public MovieAdapter(Context context, ArrayList<MovieInfo> movies) {
         super(context, 0, movies);
     }
 
