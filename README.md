@@ -7,3 +7,6 @@ These included:
 Convert Data Model MovieInfo to implement Parcelable. Instead of referring to the static ArrayList in MainActivity, this now parcels the MovieOnfo Object in the intent for the DetailActivity/Fragment to use when populating the Detail View.
 Correct use of UriBuilder for the API calls. Removed String concatenation (+) and used appendPath() instead.
 Replaced the SettingsActivity in favour of a PreferenceFragment. Since Android 3.0+ a PreferenceFragment for displaying preferences is preferred over a PreferenceActivity. Had to add compile 'com.android.support:preference-v7:24.2.0' in the build.gradle dependencies.
+Added Retrofit for the Calls to the MovieDb APIs. Created Service and Interface, had to add a Model for the full response from MovieDb. Removed AsyncTask Class.
+
+Thanks to https://futurestud.io/blog/retrofit-getting-started-and-android-client for there help and examples to get Retrofit up and running.
