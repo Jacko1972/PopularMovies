@@ -22,9 +22,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-/**
- * A placeholder fragment containing a simple view.
- */
+
 public class MainActivityFragment extends Fragment implements UpdateMovieList {
 
     private MovieAdapter movieAdapter;
@@ -46,7 +44,6 @@ public class MainActivityFragment extends Fragment implements UpdateMovieList {
                 Intent intent = new Intent(getActivity(), DetailActivity.class);
                 MovieInfo selectedMovie = movieAdapter.getItem(i);
                 intent.putExtra("parcelMovie", selectedMovie);
-                //intent.putExtra("movieInfoPosition", i);
                 startActivity(intent);
             }
         });
@@ -70,7 +67,6 @@ public class MainActivityFragment extends Fragment implements UpdateMovieList {
             } else {
                 getActivity().setTitle("Popular Movies");
             }
-            //BuildConfig.MOVIES_API_KEY
 
             MovieDbInterface dbInterface = MovieDbService.getClient().create(MovieDbInterface.class);
             Call<FullMovieJsonResponse> makeCall = dbInterface.getMovieByListType(movie_list, BuildConfig.MOVIES_API_KEY);
@@ -89,8 +85,6 @@ public class MainActivityFragment extends Fragment implements UpdateMovieList {
                     Log.d(TAG, "throws: " + t.toString());
                 }
             });
-            //FetchMovies fetchMovies = new FetchMovies(this);
-            //fetchMovies.execute(movie_list);
         } else {
             Toast.makeText(getActivity(), "No Internet Connection!! Please connect to load the Movie Information.", Toast.LENGTH_LONG).show();
         }

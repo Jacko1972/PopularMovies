@@ -13,7 +13,7 @@ public class MovieDbService {
 
 
     public static Retrofit getClient() {
-        if (retrofit==null) {
+        if (retrofit == null) {
 
             HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
             httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
