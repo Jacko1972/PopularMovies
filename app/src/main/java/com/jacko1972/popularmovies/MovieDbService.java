@@ -2,7 +2,7 @@ package com.jacko1972.popularmovies;
 
 
 import okhttp3.OkHttpClient;
-import okhttp3.logging.HttpLoggingInterceptor;
+//import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -15,11 +15,11 @@ public class MovieDbService {
     public static Retrofit getClient() {
         if (retrofit == null) {
 
-            HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
-            httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-
             OkHttpClient.Builder okHttpClient = new OkHttpClient.Builder();
-            okHttpClient.addInterceptor(httpLoggingInterceptor);
+            //Uncomment three lines and the import above to enable logging for Retrofit API calls
+            //HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
+            //httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+            //okHttpClient.addInterceptor(httpLoggingInterceptor);
 
             retrofit = new Retrofit.Builder()
                     .baseUrl(MOVIE_DB_API_URL)
