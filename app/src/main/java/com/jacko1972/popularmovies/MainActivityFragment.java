@@ -7,6 +7,7 @@ import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,11 @@ import android.widget.GridView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -23,6 +29,7 @@ public class MainActivityFragment extends Fragment implements UpdateMovieList {
 
     private MovieAdapter movieAdapter;
     private final ArrayList<MovieInfo> movieInfo = new ArrayList<>();
+    private static final String TAG = "MainActivityFragment";
 
     public MainActivityFragment() {
     }
@@ -63,8 +70,27 @@ public class MainActivityFragment extends Fragment implements UpdateMovieList {
             } else {
                 getActivity().setTitle("Popular Movies");
             }
-            FetchMovies fetchMovies = new FetchMovies(this);
-            fetchMovies.execute(movie_list);
+            //BuildConfig.MOVIES_API_KEY
+
+            MovieDbInterface dbInterface = MovieDbService.getClient().create(MovieDbInterface.class);
+            Call<FullMovieJsonResponse> makeCall = dbInterface.getMovieByListType(movie_list, BuildConfig.MOVIES_API_KEY);
+            makeCall.enqueue(new Callback<FullMovieJsonResponse>() {
+                @Override
+                public void onResponse(Call<FullMovieJsonResponse> call, Response<FullMovieJsonResponse> response) {
+                    List<MovieInfo> movieInfoList = response.body().getResults();
+                    ArrayList<MovieInfo> movieInfoArrayList = new ArrayList<MovieInfo>();
+                    movieInfoArrayList.addAll(movieInfoList);
+                    updateMovieList(movieInfoArrayList);
+                }
+
+                @Override
+                public void onFailure(Call<FullMovieJsonResponse> call, Throwable t) {
+                    Log.d(TAG, "call: " + call);
+                    Log.d(TAG, "throws: " + t.toString());
+                }
+            });
+            //FetchMovies fetchMovies = new FetchMovies(this);
+            //fetchMovies.execute(movie_list);
         } else {
             Toast.makeText(getActivity(), "No Internet Connection!! Please connect to load the Movie Information.", Toast.LENGTH_LONG).show();
         }
